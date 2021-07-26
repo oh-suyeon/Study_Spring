@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="book">
+	<insert id="insert" parameterType="HashMap">
+		<selectKey order="BEFORE" keyProperty="bookId" resultType="int">
+			SELECT NVL(MAX(book_id),0) + 1 FROM book
+		</selectKey>
+		<![CDATA[
+			INSERT INTO book(book_id, title, category, price) 
+			VALUES(
+			    (SELECT NVL(MAX(book_id),0) + 1 FROM book)
+			    ,#{title}
+			    ,#{category}
+			    ,#{price}
+			)
+		]]>
+	</insert>
+	
+	<select id="select_detail" parameterType="HashMap" resultType="HashMap">
+		<![CDATA[
+			SELECT book_id AS "bookId"
+					,title AS "title"
+					,category AS "category"
+					,price AS "price"
+			FROM book
+			WHERE book_id = #{bookId}
+		]]>
+	</select>
+</mapper>
