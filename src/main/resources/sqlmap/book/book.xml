@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="book">
-	<insert id="insert" parameterType="HashMap">
+	<insert id="insert" parameterType="hashMap">
 		<selectKey order="BEFORE" keyProperty="bookId" resultType="int">
 			SELECT NVL(MAX(book_id),0) + 1 FROM book
 		</selectKey>
@@ -16,7 +16,7 @@
 		]]>
 	</insert>
 	
-	<select id="select_detail" parameterType="HashMap" resultType="HashMap">
+	<select id="selectDetail" parameterType="hashMap" resultType="hashMap">
 		<![CDATA[
 			SELECT book_id AS "bookId"
 					,title AS "title"
@@ -26,4 +26,30 @@
 			WHERE book_id = #{bookId}
 		]]>
 	</select>
+	
+	<select id="selectList" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT ROW_NUMBER() OVER (ORDER BY book_id DESC) rnum
+					,book_id AS "bookId"
+					,title AS "title"
+					,category AS "category"
+					,price AS "price"
+			FROM book
+			WHERE 1 = 1
+		]]>
+		<if test="keyword!=null and keyword!=''">
+			AND title LIKE '%' || #{keyword} || '%' 
+			 OR category LIKE '%' || #{keyword} || '%'
+		</if>
+	</select>
+	
+	<update id="update" parameterType="hashMap">
+		<![CDATA[
+			UPDATE book 
+			SET title = #{title}
+			    ,category = #{category}
+			    ,price = #{price}
+			WHERE book_id = #{bookId}
+		]]>
+	</update>
 </mapper>

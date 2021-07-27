@@ -6,7 +6,7 @@
 <title>도서 등록</title>
 </head>
 <body>
-	<h2>${message }</h2>
+	<h2>${message}</h2>
 	
 	<form action="/create" method="post">
 		<p>
@@ -18,7 +18,7 @@
 		<p>
 			가격 : <input type="text" name="price" />
 		</p>
-		<input type="submit">
+		<button type="submit">등록</button>
 	</form>
 </body>
 </html>
