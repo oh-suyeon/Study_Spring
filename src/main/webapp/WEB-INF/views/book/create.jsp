@@ -18,6 +18,9 @@
 		<p>
 			가격 : <input type="text" name="price" />
 		</p>
+		<p>
+			첨부 이미지 : <input type="file" name="picture" multiple />
+		</p>
 		<button type="submit">등록</button>
 	</form>
 </body>

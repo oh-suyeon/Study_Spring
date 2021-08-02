@@ -42,6 +42,34 @@
 			 OR category LIKE '%' || #{keyword} || '%'
 		</if>
 	</select>
+
+	<select id="count" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) 
+		FROM book
+		WHERE 1 = 1
+		<if test="keyword!=null and keyword!=''">
+			AND title LIKE '%' || #{keyword} || '%' 
+			 OR category LIKE '%' || #{keyword} || '%'
+		</if>
+	</select>
+	
+	<select id="selectListPage" parameterType="hashMap" resultType="hashMap">
+		SELECT * 
+		FROM (
+				SELECT ROW_NUMBER() OVER (ORDER BY book_id DESC) rnum
+						,book_id AS "bookId"
+						,title AS "title"
+						,category AS "category"
+						,price AS "price"
+				FROM book
+				WHERE 1 = 1
+				<if test="keyword!=null and keyword!=''">
+					AND title LIKE '%' || #{keyword} || '%' 
+					 OR category LIKE '%' || #{keyword} || '%'
+				</if>
+			)
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
 	
 	<update id="update" parameterType="hashMap">
 		<![CDATA[

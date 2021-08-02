@@ -1,7 +1,7 @@
 package kr.or.ddit.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,28 +16,33 @@ public class BookServiceImpl implements BookService{
 	BookDao bookDao;
 	
 	@Override
-	public String create(HashMap<String, Object> map) {
-		int affectRowCnt = bookDao.insert(map);
-		if(affectRowCnt == 1) {
-			return "1";
-		}
-		return null;
+	public int create(Map<String, Object> map) {
+		return bookDao.insert(map);
 	}
-
+	
 	@Override
-	public HashMap<String, Object> selectDetail(HashMap<String, Object> map) {
+	public Map<String, Object> selectDetail(Map<String, Object> map) {
 		return bookDao.selectDetail(map);
 	}
 
 	@Override
-	public List<HashMap<String, Object>> selectList(HashMap<String, Object> map) {
+	public List<Map<String, Object>> selectList(Map<String, Object> map) {
 		return bookDao.selectList(map);
+	}
+	
+	@Override
+	public int count(Map<String, Object> map) {
+		return bookDao.count(map);
 	}
 
 	@Override
-	public int edit(HashMap<String, Object> map) {
-		int affectRowCnt = bookDao.edit(map);
-		return affectRowCnt;
+	public List<Map<String, Object>> selectListPage(Map<String, Object> map) {
+		return bookDao.selectListPage(map);
+	}
+
+	@Override
+	public int edit(Map<String, Object> map) {
+		return bookDao.edit(map);
 	}
 
 }

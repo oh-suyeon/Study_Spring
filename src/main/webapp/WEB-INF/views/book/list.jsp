@@ -23,7 +23,7 @@
 <body>
 	<h2>도서 목록</h2>
 	
-	<form method="post" action="/list">
+	<form action="/list">
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 		<button type="submit">검색</button>
 		
